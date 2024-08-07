@@ -2,24 +2,47 @@
 
 @{
     ViewBag.Title = "index";
+    TipoAnimalDal TipoanimalDal = new TipoAnimalDal();
 
 }
-@Model List<Animal>
-    <main>
-        <h2>Animales</h2>
-        <table>
-            <tr>
-                <th>IdNumero</th>
-                <th>Nombre</th>
-            </tr>
 
-            @foreach (Animal animal in Model)
-            {
-                <tr>
-                    <td>Id: @animal.IdAnimal</td>
-                    <td>Nombre: @animal.nombre</td>
-                </tr>
-            }
-        </table>
-        <h3>@ViewBag.Message</h3>
-    </main>
+    @Model List<Animal>
+
+
+
+                   <main>
+                       <h2>Animales</h2>
+                       @using (Html.BeginForm("DeleteSelected", "Animales", FormMethod.Post, new { id = "deleteForm" }))
+                       {
+                           <button type="submit" class="btn btn-danger">Borrar</button>
+                           <table class="styled-table">
+                               <tr>
+                                   <th>Id</th>
+                                   <th>Nombre</th>
+                                   <th>Raza</th>
+                                   <th>Tipo</th>
+                                   <th>FechaNacimiento</th>
+                                   <th>Acciones</th>
+                               </tr>
+
+                               @foreach (Animal animal in Model)
+                               {
+                                   <tr>
+                                       <td> @animal.IdAnimal</td>
+                                       <td> @animal.NombreAnimal</td>
+                                       <td> @animal.Raza</td>
+                                       <td> @TipoanimalDal.GetTypeAnimal(@animal.RIdTipoAnimal)</td>
+                                       <td> @animal.FechaNacimiento</td>
+                                       <td><input type="checkbox" name="selectedItems" value="@animal.IdAnimal" /></td>
+
+
+                                   </tr>
+                               }
+                           </table>
+                       }
+                           <form action="@Url.Action("FormAdd", "Animales")" method="get" style="display: inline;">
+                               <button type="submit" class="btn btn-primary">Añadir Animal</button>
+                           </form>
+                           <button>Borrar</button>
+                           <h3>@ViewBag.Message</h3>
+                       </main>

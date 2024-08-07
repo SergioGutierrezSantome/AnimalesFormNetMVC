@@ -1,0 +1,48 @@
+﻿@using AnimalesFormNetMVC.Models
+@{
+    ViewBag.Title = "FormAdd";
+
+}
+@Model List<TipoAnimal>
+
+    <h2>Añadir Animal</h2>
+    <form id="AnimalTable" asp-controller="Animales" asp-action="FormAdd" class="login-form" method="POST">
+        <input type="hidden" name="__RequestVerificationToken" value="YOUR_CSRF_TOKEN_HERE" />
+
+        <div class="form-group">
+            <label for="NombreAnimal">Nombre Animal</label>
+            <input type="text" id="NombreAnimal" name="NombreAnimal" class="form-control" required>
+            <span class="text-danger" id="NombreAnimalError"></span> <!-- Mensaje de error -->
+        </div>
+
+        <div class="form-group">
+            <label for="Raza">Raza</label>
+            <input type="text" id="Raza" name="Raza" class="form-control" required>
+            <span class="text-danger" id="RazaError"></span> <!-- Mensaje de error -->
+        </div>
+
+        <div class="form-group">
+            <label for="RIdTipoAnimal">Tipo de Animal</label>
+            <select id="RIdTipoAnimal" name="RIdTipoAnimal" class="form-control" required>
+                @foreach (TipoAnimal tiposanimal in Model)
+                {
+                    <option value="@tiposanimal.IdTipoAnimal">@tiposanimal.TipoDescripcion</option>
+
+                }
+
+                <!-- Añade más opciones aquí -->
+            </select>
+            <span class="text-danger" id="RIdTipoAnimalError"></span> <!-- Mensaje de error -->
+        </div>
+
+        <div class="form-group">
+            <label for="FechaNacimiento">Fecha Nacimiento</label>
+            <input type="date" id="FechaNacimiento" name="FechaNacimiento" class="form-control" required>
+            <span class="text-danger" id="FechaNacimientoError"></span> <!-- Mensaje de error -->
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Añadir Animal" class="btn btn-primary">
+        </div>
+
+    </form>
